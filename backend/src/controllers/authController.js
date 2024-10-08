@@ -37,7 +37,6 @@ const register = async (req, res) => {
       token,
     });
   } catch (error) {
-    console.log(error);
     res.status(500).json({ error: "Error registering user" });
   }
 };
