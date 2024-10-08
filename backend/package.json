@@ -10,6 +10,10 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@prisma/client": "^5.20.0",
     "eslint": "^9.12.0"
+  },
+  "devDependencies": {
+    "prisma": "^5.20.0"
   }
 }
