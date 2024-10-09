@@ -1,7 +1,7 @@
-// frontend/src/pages/Home.jsx
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import api from "../services/api";
+import ProfileInfo from "../components/Profile/ProfileInfo"; // Import ProfileInfo component
 
 const Home = () => {
   const [users, setUsers] = useState([]);
@@ -9,7 +9,6 @@ const Home = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        // Assuming we have an endpoint to fetch all users
         const response = await api.get("/users");
         setUsers(response.data);
       } catch (error) {
@@ -23,6 +22,8 @@ const Home = () => {
   return (
     <div>
       <h2>Welcome to the Messaging App</h2>
+      <ProfileInfo />
+      <Link to="/profile">View or Edit Your Profile</Link>
       <h3>Start a conversation:</h3>
       <ul>
         {users.map((user) => (

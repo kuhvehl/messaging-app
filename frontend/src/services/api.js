@@ -26,6 +26,8 @@ export const getProfile = () => api.get("/profile");
 export const updateProfile = (bio, avatarUrl) =>
   api.put("/profile", { bio, avatarUrl });
 
+export const getUserProfile = (userId) => api.get(`/profile/${userId}`);
+
 export const sendMessage = async (recipientId, content) => {
   try {
     const response = await api.post("/messages/send", { recipientId, content });

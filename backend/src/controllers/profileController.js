@@ -47,4 +47,24 @@ const updateProfile = async (req, res) => {
   }
 };
 
-module.exports = { getProfile, updateProfile };
+const getUserProfile = async (req, res) => {
+  try {
+    const { id } = req.params; // Get the userId from the route params
+
+    const user = await prisma.user.findUnique({
+      where: { id: parseInt(id) }, // Convert id to an integer
+      include: { profile: true },
+    });
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const { password, ...userWithoutPassword } = user;
+    res.json(userWithoutPassword);
+  } catch (error) {
+    res.status(500).json({ error: "Error retrieving user profile" });
+  }
+};
+
+module.exports = { getProfile, updateProfile, getUserProfile };

@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { getProfile, updateProfile } from "../services/api";
 
 const Profile = () => {
   const [profile, setProfile] = useState(null);
   const [bio, setBio] = useState("");
-  const [avatarUrl, setAvatarUrl] = useState("");
+  const navigate = useNavigate(); // Hook for navigation
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -12,7 +13,6 @@ const Profile = () => {
         const response = await getProfile();
         setProfile(response.data);
         setBio(response.data.profile?.bio || "");
-        setAvatarUrl(response.data.profile?.avatarUrl || "");
       } catch (error) {
         console.error("Error fetching profile:", error);
       }
@@ -24,8 +24,9 @@ const Profile = () => {
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
     try {
-      const response = await updateProfile(bio, avatarUrl);
+      const response = await updateProfile(bio);
       setProfile(response.data);
+      navigate("/"); // Redirect to home page after update
     } catch (error) {
       console.error("Error updating profile:", error);
     }
@@ -43,15 +44,6 @@ const Profile = () => {
             id="bio"
             value={bio}
             onChange={(e) => setBio(e.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="avatarUrl">Avatar URL:</label>
-          <input
-            type="text"
-            id="avatarUrl"
-            value={avatarUrl}
-            onChange={(e) => setAvatarUrl(e.target.value)}
           />
         </div>
         <button type="submit">Update Profile</button>
