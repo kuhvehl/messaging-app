@@ -4,6 +4,7 @@ const cors = require("cors");
 const authRoutes = require("./routes/authRoutes");
 const messageRoutes = require("./routes/messageRoutes");
 const profileRoutes = require("./routes/profileRoutes");
+const userRoutes = require("./routes/userRoutes");
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use("/auth", authRoutes);
 app.use("/messages", messageRoutes);
 app.use("/profile", profileRoutes);
+app.use("/users", userRoutes);
 
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to the Messaging App API" });
