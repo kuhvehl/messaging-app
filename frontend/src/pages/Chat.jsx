@@ -18,7 +18,6 @@ const Chat = () => {
     };
 
     fetchMessages();
-    // In a real application, you might want to set up a polling mechanism or use WebSockets here
   }, [userId]);
 
   const handleSendMessage = async (e) => {

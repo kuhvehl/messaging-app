@@ -1,5 +1,4 @@
-// frontend/src/App.jsx
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -15,15 +14,35 @@ import Register from "./components/Auth/Register";
 
 const App = () => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      try {
+        const userData = JSON.parse(storedUser);
+        setUser(userData);
+      } catch (error) {
+        console.error("Failed to parse user data:", error);
+      }
+    }
+    setLoading(false);
+  }, []);
 
   const handleLogin = (userData) => {
     setUser(userData);
+    localStorage.setItem("user", JSON.stringify(userData));
   };
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
     setUser(null);
   };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <Router>
@@ -41,7 +60,6 @@ const App = () => {
             </>
           )}
         </nav>
-
         <Routes>
           <Route
             path="/"

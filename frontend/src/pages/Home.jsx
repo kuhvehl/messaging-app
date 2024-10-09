@@ -1,3 +1,4 @@
+// frontend/src/pages/Home.jsx
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import api from "../services/api";
@@ -8,6 +9,7 @@ const Home = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
+        // Assuming we have an endpoint to fetch all users
         const response = await api.get("/users");
         setUsers(response.data);
       } catch (error) {
