@@ -26,8 +26,18 @@ export const getProfile = () => api.get("/profile");
 export const updateProfile = (bio, avatarUrl) =>
   api.put("/profile", { bio, avatarUrl });
 
-export const sendMessage = (recipientId, content) =>
-  api.post("/messages/send", { recipientId, content });
+export const sendMessage = async (recipientId, content) => {
+  try {
+    const response = await api.post("/messages/send", { recipientId, content });
+    return response;
+  } catch (error) {
+    console.error(
+      "Error sending message:",
+      error.response?.data || error.message
+    );
+    throw error;
+  }
+};
 
 export const getMessages = (otherUserId) => api.get(`/messages/${otherUserId}`);
 
